@@ -6,6 +6,10 @@ def grover_search(qubits, oracle_function):
     """
     Grover search algorithm for querying a quantum oracle which promises a single
     solution.
+    It accepts input |x>|y>, where |x> can be either be a single qubit or a tensor
+    product of qubits, and |y> is an ancillary qubit.
+    The oracle function is expected to mark the solution state by taking |x>|y>
+    and computing |x>| (y + f(x))%2, where f(x) = 1 for x = solution state.
     This algorithm finds a solution using O(sqrt(N)) queries to the oracle, whereas
     classically it would take O(N) queries.
 
@@ -64,6 +68,7 @@ def deutsch_jozsa(qubits, oracle_function):
     It accepts input |x>|y>, where |x> can be either be a single qubit or a tensor product
     of qubits. If the function is constant, then |x> will be measured as all zeroes with a
     probability of unity. If it is balanced, then the opposite is true.
+
     :param qubits: the qubit register, consisting of n-1 input qubits, and 1 ancillary qubit
     :param oracle_function: a function that promises to be either constant or balanced,
     where it takes the qubit register |x>|y> and outputs |x>| (y + f(x))%2 >

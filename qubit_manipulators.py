@@ -1,4 +1,5 @@
-import math
+from math import *
+import cmath
 
 
 def hadamard_gate(qubits, qubit_position=None):
@@ -33,16 +34,16 @@ def hadamard_gate(qubits, qubit_position=None):
 
         for i in range(0, len(amplitudes)):
 
-            diff_coeff = pow(2, qubit_position)/2
+            diff_coeff = int(pow(2, qubit_position)/2)
 
             if count == diff_coeff:
                 minus = not minus
                 count = 0
 
             if not minus:
-                amp = (amplitudes[i] + amplitudes[i + diff_coeff]) / math.sqrt(2)
+                amp = (amplitudes[i] + amplitudes[i + diff_coeff]) / sqrt(2)
             else:
-                amp = (amplitudes[i - diff_coeff] - amplitudes[i]) / math.sqrt(2)
+                amp = (amplitudes[i - diff_coeff] - amplitudes[i]) / sqrt(2)
 
             new_amplitudes.append(amp)
             count += 1
@@ -83,7 +84,7 @@ def pauli_x_gate(qubits, qubit_position=None):
 
         for i in range(0, len(amplitudes)):
 
-            diff_coeff = pow(2, qubit_position) / 2
+            diff_coeff = int(pow(2, qubit_position) / 2)
 
             if count == diff_coeff:
                 minus = not minus
@@ -133,7 +134,7 @@ def pauli_y_gate(qubits, qubit_position=None):
 
         for i in range(0, len(amplitudes)):
 
-            diff_coeff = pow(2, qubit_position) / 2
+            diff_coeff = int(pow(2, qubit_position) / 2)
 
             if count == diff_coeff:
                 minus = not minus
@@ -185,7 +186,7 @@ def pauli_z_gate(qubits, qubit_position=None):
 
         for i in range(0, len(amplitudes)):
 
-            diff_coeff = pow(2, qubit_position) / 2
+            diff_coeff = int(pow(2, qubit_position) / 2)
 
             if count == diff_coeff:
                 minus = not minus
@@ -202,4 +203,39 @@ def pauli_z_gate(qubits, qubit_position=None):
         return new_amplitudes
 
     qubits.manipulate(pauli_z_function)
+
+
+def qft(qubits):
+    """
+    Quantum analogue of the discrete fourier transform. Performs the linear transformation
+    on an input verctor of qubits.
+
+    :param qubits: the input qubit vector to be fourier transformed
+    """
+
+    def qft_function(amplitudes):
+
+        new_amplitudes = []
+        num_points = len(amplitudes)
+
+        # for each element in the transformed vector
+        for i in range(0, num_points):
+
+            summation = complex(0, 0)
+
+            # for each element in the input vector
+            for j in range(0, num_points):
+
+                angle = (2.0 * pi * i * j)/num_points
+
+                summation += amplitudes[j] * cmath.exp(-1j * angle)
+
+            new_amplitudes.append(summation)
+
+        print(new_amplitudes)
+
+        return new_amplitudes
+
+    qubits.manipulate(qft_function)
+
 

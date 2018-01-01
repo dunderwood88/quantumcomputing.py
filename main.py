@@ -4,8 +4,10 @@ from quantum_algorithms import *
 
 qreg = QubitRegister(3)
 
+qft(qreg)
 
-def balanced_function(amplitudes):
+
+"""def balanced_function(amplitudes):
 
     new_amplitudes = []
 
@@ -40,10 +42,10 @@ def constant_function(amplitudes):
     return new_amplitudes
 
 
-deutsch_jozsa(qreg, balanced_function)
+deutsch_jozsa(qreg, constant_function)
 
 
-"""def search_space(amplitudes):
+def search_space(amplitudes):
 
     new_amplitudes = []
 
